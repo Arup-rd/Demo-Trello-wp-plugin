@@ -1,0 +1,52 @@
+{
+    "name": "my-plugin",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "hot": "cross-env NODE_ENV=development webpack-dev-server --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "author": "wpmn",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com"
+    },
+    "homepage": "https://github.com",
+    "devDependencies": {
+        "@babel/plugin-syntax-dynamic-import": "^7.8.3",
+        "@babel/preset-env": "^7.11.0",
+        "@babel/preset-react": "^7.10.4",
+        "@wordpress/hooks": "^2.9.0",
+        "babel-eslint": "^10.0.3",
+        "babel-plugin-component": "^1.1.1",
+        "babel-plugin-import": "^1.13.0",
+        "cross-env": "^7.0.0",
+        "eslint": "^7.7.0",
+        "eslint-config-standard": "^14.1.0",
+        "eslint-loader": "^4.0.2",
+        "eslint-plugin-import": "^2.22.0",
+        "eslint-plugin-node": "^11.0.0",
+        "eslint-plugin-promise": "^4.2.1",
+        "eslint-plugin-standard": "^4.0.1",
+        "eslint-plugin-vue": "^6.1.2",
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.20",
+        "moment": "^2.27.0",
+        "resolve-url-loader": "^3.1.2",
+        "sass": "^1.26.10",
+        "sass-loader": "^8.0.2",
+        "vue": "^2.6.12",
+        "vue-eslint-parser": "^7.1.0",
+        "vue-router": "^3.4.3",
+        "vue-template-compiler": "^2.6.12"
+    },
+    "dependencies": {
+        "clipboard": "^2.0.6",
+        "element-ui": "^2.13.2",
+        "tailwindcss": "^1.9.6",
+        "uuid": "^8.3.1",
+        "vue-cli-plugin-tailwind": "^1.5.0",
+        "vuex": "^3.5.1"
+    }
+}

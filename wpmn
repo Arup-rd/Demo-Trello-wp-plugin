@@ -1,0 +1,101 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/vendor/autoload.php';
+
+$config = require(__DIR__.'/config/database.php');
+
+$namespace = $config['namespace'];
+
+$commands = array(
+    'migrate' => function() use ($namespace) {
+        echo "Please wait, migrating...\n";
+        $migrator = $namespace.'\DBMigrator';
+        $migrator::run();
+        die("Migrated!\n");
+    },
+    'migrate-refresh' => function() use ($namespace) {
+        global $wpdb;
+        
+        echo "Please wait, refreshing all tables...\n";
+        
+        $migrator = $namespace.'\DBMigrator';
+
+        $wpdb->query('SET foreign_key_checks = 0');
+
+        foreach (glob(__DIR__.'/database/Migrations/*.php') as $file) {
+            $class = $namespace.'\\Migrations\\'.basename($file, '.php');
+            $table = $wpdb->prefix.$class::$tableName;
+            $wpdb->query("DROP TABLE IF EXISTS $table");
+        }
+
+        $wpdb->query('SET foreign_key_checks = 1');
+
+        $migrator = $namespace.'\DBMigrator';
+
+        $migrator::run();
+
+        die("Re-Migrated All Tables!\n");
+    },
+    'seed' => function() use ($namespace) {
+        echo "Please wait, seeding...\n";
+        $seeder = $namespace.'\DBSeeder';
+        $seeder::run();
+        die("Seeded!\n");
+    },
+    'build' => function() {
+        echo "\nPlease wait, packaging the plugin for production...\n";
+
+        $pluginDir = basename(__DIR__);
+        
+        $targetDir = '../' . $pluginDir .'-'. date('Y-m-d-h-i-s');
+        
+        mkdir($targetDir);
+
+        foreach ([
+            'app', 'assets', 'database', 'vendor', 'language', 'plugin.php', 'index.php', 'composer.json'
+        ] as $src) {
+            $command = "cp -a {$src} {$targetDir}";
+            shell_exec(escapeshellcmd($command));
+        }
+        
+        $deleteables = [
+            '/database/Faker',
+            '/database/seeders',
+            '/database/DBSeeder.php',
+            '/boot/globals_dev.php'
+        ];
+
+        foreach ($deleteables as $path) {
+            shell_exec("rm -rf ".escapeshellarg($targetDir . $path));
+        }
+
+        $newPath = trim($targetDir, '.');
+        $dirPath = realpath(dirname(__FILE__) . '/..');
+        die("\nYour plugin is ready for production at the following path:\n\n{$dirPath}{$newPath} \n\n");
+    },
+    'help' => function($commands) {
+        $validCommands = implode("\n", array_keys($commands));
+        die(
+            "Available Commands: \n{$validCommands}\nUsage: php wpns [command name]\n"
+        );
+    }
+);
+
+if (!$params = array_slice($argv, 1)) {
+    $commands['help']($commands);
+}
+
+$command = reset($params);
+
+if (array_key_exists($command, $commands)) {
+    try {
+        require_once "../../../wp-load.php";
+        $commands[$command]($commands);
+    } catch(\Exception $e) {
+        die($e->getMessage() . "\n");
+    }
+} else {
+    echo "Command Not Found!\n";
+    $commands['help']($commands);
+}

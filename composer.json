@@ -1,0 +1,13 @@
+{
+    "autoload": {
+        "psr-4": {
+            "MyPlugin\\": "app/",
+            "MyPlugin\\Database\\": "database/",
+            "MyPlugin\\Framework\\": "vendor/framework"
+        },
+        "classmap": ["database"],
+        "files": [
+            "boot/globals.php"
+        ]
+    }
+}

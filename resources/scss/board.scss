@@ -1,0 +1,57 @@
+.column {
+    width: 300px; 
+    height: auto; 
+    background-color:#24a684 ; 
+    border-radius:10px; 
+    padding-bottom:20px; 
+    margin-right: 20px; 
+    padding-left:20px; 
+    padding-right:20px
+}
+
+.columnListItem {
+    margin-top:10px;
+    background-color:white; 
+    border-radius:5px; 
+    padding:2px; 
+    padding-left:10px
+}
+
+.addTask {
+    border: none transparent;
+    background: transparent;
+    outline: none;
+    color: white;
+    width: 100%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.editTask {
+    border: none transparent;
+    background: transparent;
+    outline: none;
+    color: black;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.editDescription{
+    margin-top: 20px;
+    border: none transparent;
+    background: transparent;
+    outline: none;
+    color: black;
+    width: 100%;
+    border-width: 0;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+}
+
+
+::-webkit-input-placeholder {
+    color: #614721;
+    font-weight: 500;
+}
